@@ -1,0 +1,22 @@
+# This file is part of mysql-db-backup-faster.
+# https://github.com/heynemann/generator-python-package
+
+# Licensed under the MIT license:
+# http://www.opensource.org/licenses/MIT-license
+# Copyright (c) 2020, gwangil <pki054@naver.com>
+
+[run]
+omit =
+    *tests.py
+branch = True
+source =
+    mysql_db_backup_faster
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    raise NotImplementedError
+    if __name__ == .__main__.:
+    from urllib.parse import parse_qs
+    except ImportError:

@@ -1,0 +1,24 @@
+{
+	"backup": {
+		"backup_list": [
+			{
+				"list": [
+					"%"
+				],
+				"not_list": [],
+				"use": 1,
+				"database": "employees_test",
+				"name": "employees"
+			}
+		],
+		"etc": {
+			"job": 5,
+			"compression": {
+				"use": 1,
+				"temp_directory": "/tmp/dbbackup",
+				"save_to_location": "/workspace/mysql-db-backup-faster/backup/",
+				"file_name_format": "%Y%m%d_test.tar.gz"
+			}
+		}
+	}
+}
