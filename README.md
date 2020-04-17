@@ -10,4 +10,10 @@ python3.8 setup.py install
 
 ![이미지 이름](./assets/package_install.gif)
 
-package_install
+## 2. 실행 방법   
+설치한 프로그램을 실행하기 위해서 mysqlbackup을 실행합니다.
+``` bash
+mysqlbackup -b
+```
+
+![이미지 이름](./assets/mysqlbackup_execute.gif)
