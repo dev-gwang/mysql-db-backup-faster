@@ -33,7 +33,7 @@ an incredible python package
     keywords='',
     author='gwangil',
     author_email='pki054@naver.com',
-    url='https://github.com/heynemann/generator-python-package',
+    url='https://github.com/gwangildev/mysql-db-backup-faster',
     license='MIT',
     classifiers=[
         'Development Status :: 4 - Beta',

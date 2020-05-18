@@ -25,7 +25,7 @@ q = queue.Queue()
 BACKUP_FOLDER	= "/tmp/dbbackup"
 variable = []
 
-	
+OPT_PATH	=	"/opt/mysqlbackup/"
 SCRIPT_NAME_SPLIT	   = inspect.getfile(inspect.currentframe()).split("/", -1)
 SCRIPT_NAME			 = SCRIPT_NAME_SPLIT[len(SCRIPT_NAME_SPLIT) - 1].split(".")[0]
 
@@ -112,7 +112,7 @@ class Configure:
 									"file_name_format":"%Y%m%d_test.tar.gz"
 								},
 								"db": {
-									"user": "",
+									"user": "root",
 									"password": ""
 								}
 							}
@@ -123,7 +123,12 @@ class Configure:
 		logger.info("config {}.json start".format(SCRIPT_NAME))
 
 	def read_config_file(self):
-		config_location = "./{}.json".format(SCRIPT_NAME)
+		config_location = "{}/{}.json".format(OPT_PATH, SCRIPT_NAME)
+
+		if not os.path.exists(OPT_PATH):
+			os.mkdir(OPT_PATH)
+			
+		print(config_location)
 		if not os.path.exists(config_location):
 			with open(config_location, "w", encoding="utf-8") as outfile:
 				json.dump(self.option_list, outfile, indent="\t")
@@ -186,7 +191,7 @@ def sum(config, index):
 
 class DatabaseInformation(Helper.DBHandler):
 	def __init__(self, config):
-		super().__init__(host="localhost", db="mysql", user=config["backup"]["etc"]["db"]["user"], passwd=config["backup"]["etc"]["db"]["password"])
+		super().__init__(host="localhost", user=config["backup"]["etc"]["db"]["user"], passwd=config["backup"]["etc"]["db"]["password"], db="mysql")
 		
 		self.table_list = []
 		self.list	 = []
@@ -318,7 +323,7 @@ class CompressionClass:
 
 		Helper.ExecuteCommand().execute_command("tar -zcvf {} {}".format(
 																				self.file_name,
-																				self.compression["save_to_location"]
+																				"backup"
 																				), True)
 def argument_parser():
 	parser = OptionParser()
