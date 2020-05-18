@@ -149,7 +149,9 @@ class Configure:
 
 def sum(config, index):
 	global BACKUP_FOLDER, variable, DOING_SIZE
-
+	username = config["backup"]["etc"]["db"]["user"]
+	password = config["backup"]["etc"]["db"]["password"]
+	
 
 	while True:
 		item_template = {"do":"END", "item":""}
@@ -177,10 +179,10 @@ def sum(config, index):
 			if not os.path.isdir("{}/{}".format(BACKUP_FOLDER, item["folder"])):
 				os.mkdir("{}/{}".format(BACKUP_FOLDER, item["folder"]))
 			
-			logger.info("mysqldump -uroot {} {} --set-charset --default-character-set={} --lock-tables --extended-insert=FALSE --force --complete-insert --insert-ignore > {}/{}/{}.sql".format(item["database"], item["name"], item["charset"].split('_')[0], BACKUP_FOLDER, item["folder"], item["name"]))
-			Helper.ExecuteCommand().execute_command("mysqldump -uroot {} {} --set-charset --default-character-set={} --lock-tables --extended-insert=FALSE --force --complete-insert --insert-ignore > {}/{}/{}.sql".format(item["database"], item["name"], item["charset"].split('_')[0], BACKUP_FOLDER, item["folder"], item["name"]), True)
+			logger.info("mysqldump -u{} -p{} {} {} --set-charset --default-character-set={} --lock-tables --extended-insert=FALSE --force --complete-insert --insert-ignore > {}/{}/{}.sql".format(username, password, item["database"], item["name"], item["charset"].split('_')[0], BACKUP_FOLDER, item["folder"], item["name"]))
+			Helper.ExecuteCommand().execute_command("mysqldump -u{} -p{} {} {} --set-charset --default-character-set={} --lock-tables --extended-insert=FALSE --force --complete-insert --insert-ignore > {}/{}/{}.sql".format(username, password, item["database"], item["name"], item["charset"].split('_')[0], BACKUP_FOLDER, item["folder"], item["name"]), True)
 		elif config["exec"] == "restore":
-			Helper.ExecuteCommand().execute_command("mysql -uroot -D{} --default-character-set={} < {}".format(item["database"], item["charset"].split('_')[0], item["name"]), False)
+			Helper.ExecuteCommand().execute_command("mysql -u{} -p{} -D{} --default-character-set={} < {}".format(username, password, item["database"], item["charset"].split('_')[0], item["name"]), False)
 		
 		DOING_SIZE = DOING_SIZE + 1
 		if q.qsize() == 0:
@@ -319,9 +321,7 @@ class CompressionClass:
 
 		logger.info(directory)
 
-		Helper.ExecuteCommand().execute_command("cd {}; tar -zcvf {}/{} {}".format(
-																				directory,
-																				self.compression["save_to_location"],
+		Helper.ExecuteCommand().execute_command("tar -zcvf {} {}".format(
 																				self.file_name,
 																				"backup"
 																				), True)
