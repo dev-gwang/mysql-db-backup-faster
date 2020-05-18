@@ -8,4 +8,4 @@
 # http://www.opensource.org/licenses/MIT-license
 # Copyright (c) 2020, gwangil <pki054@naver.com>
 
-__version__ = '0.1.0'  # NOQA
+__version__ = '0.2.0'  # NOQA
